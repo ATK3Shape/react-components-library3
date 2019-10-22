@@ -1,0 +1,109 @@
+@import '../../assets/styles/variables.scss';
+
+$length: 3em;
+$coef: 3;
+
+.root {
+    margin-top: 8rem;
+}
+
+.chart {
+    perspective: 5000px;
+}
+
+.bar {
+    position: relative;
+    width: $length * $coef;
+    height: $length * $coef;
+    font-size: 2rem;
+    transform: rotateX(-24deg) rotateY(-42deg);
+    transform-style: preserve-3d;
+    transform-origin: 50% 50%;
+
+    &:before {
+        content: '';
+        display: block;
+        width: $length * $coef;
+        height: $length * $coef;
+        // background-color: rgb(228, 204, 177);
+        position: absolute;
+        transform: rotateX(-90deg);
+        bottom: 0;
+        transform-origin: 0% 100%;
+
+    }
+
+    &:after {
+        content: '';
+        display: block;
+        width: $length * $coef;
+        height: $length * $coef;
+        // background-color: rgb(202, 171, 135);
+        position: absolute;
+        bottom: 0;
+        transform-origin: 0% 100%;
+        transform: rotateY(-90deg);
+    }
+
+    .face {
+        position: absolute;
+        width: $length;
+        height: $length * $coef;
+    }
+
+    .growing-bar {
+        background-color: #bababa;
+        width: 100%;
+        height: $length;
+        bottom: 0;
+        position: absolute;
+        transition: $transition;
+    }
+
+    .side-left {        
+        transform: translateZ($length);
+        background-color: #e6e6e6;
+    }
+
+    .side-right {
+        transform-origin: 100% 100%;
+        transform: rotateY(90deg);
+        background-color: #f7f7f7;
+
+        .growing-bar {
+            background-color: #d1004b;
+        }
+    }
+
+    .top {
+        width: $length;
+        height: $length;
+        transform-origin: 0% 0%;
+        transform: rotateX(90deg);
+        background-color: #fff;
+    }
+}
+
+@for $i from 0 to 101
+{
+    .bar-left-#{$i}
+    {
+        .side-left .growing-bar
+        {
+            height: percentage($i/100);
+        }
+    }
+}
+
+@for $i from 0 to 101
+{
+    .bar-right-#{$i}
+    {
+        .side-right .growing-bar
+        {
+            height: percentage($i/100);
+        }
+    }
+}
+
+
